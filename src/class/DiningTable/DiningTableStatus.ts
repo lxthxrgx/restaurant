@@ -1,13 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
-import { DiningTablesTrack } from "./DiningTableTrack";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { DiningTables } from "./DiningTables";
 
 @Entity()
 export class DiningTablesStatus {
     @PrimaryGeneratedColumn()
-    id: number;
+    StatusId: number;
 
     @Column()
-    ChairsCount: number;
+    Status: string;
 
-    
+    @OneToMany(() => DiningTables, diningTable => diningTable.diningTablesStatus)
+    diningTables: DiningTables[];
 }

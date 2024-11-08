@@ -1,16 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { DiningTables } from "./DiningTables";
+import { Orders } from "../Order/Orders";
 
 @Entity()
 export class DiningTablesTrack {
     @PrimaryGeneratedColumn()
-    id: number;
+    DiningTableTrackId: number;
 
-    @Column()
-    ChairsCount: number;
+    @ManyToOne(() => DiningTables)
+    @JoinColumn({ name: "DiningTableId" })
+    diningTable: DiningTables;
 
-    @Column()
-    lastName: string;
-
-    @Column()
-    age: number;
+    @ManyToOne(() => Orders)
+    @JoinColumn({ name: "OrderId" })
+    order: Orders;
 }
