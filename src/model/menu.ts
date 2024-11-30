@@ -1,7 +1,8 @@
-export interface menu
+export interface IMenu
 {
     id:number;
-    DishName:string;
-    Description:string;
-    Price:number;
+    dishName:string;
+    description:string;
+    price:number;
+    image:string;
 }

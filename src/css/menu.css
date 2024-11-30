@@ -1,0 +1,54 @@
+.tiles-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px;
+    justify-content: center;
+  }
+  
+  .tile {
+    background-color: #e9e7e7;
+    border-radius: 8px;
+    width: 250px;
+    height: 350px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  .tile:hover {
+    transform: scale(1.05);
+    background-color: #f0f0f0;
+  }
+  
+  .tile h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .tile img {
+    width: 250px;
+    height: 250px;
+    border-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  
+  .tile.add-new-tile:hover {
+    transform: scale(1.05);
+    background-color: #bdbdbd;
+  }
+  
+  .tile.add-new-tile .plus-icon {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .tile.add-new-tile p {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
