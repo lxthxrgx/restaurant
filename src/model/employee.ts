@@ -1,7 +1,7 @@
-export interface employee
+export interface IEmployee
 {
     id:number;
-    Name:string;
-    Surname:string;
-    Phone:string;
+    name:string;
+    surname:string;
+    position:string;
 }

@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 import './App.css';
 import Menu from './pages/Menu';
+import Table from './pages/Table';
+import EmployeeTable from './pages/Employee';
 
 function Home() {
     return <h1>Welcome to the Home Page</h1>;
@@ -21,6 +23,12 @@ function App() {
                             <li className="navbar-item">
                                 <Link to="/menu" className="navbar-link">Menu</Link>
                             </li>
+                            <li className="navbar-item">
+                                <Link to="/tables" className="navbar-link">Tables</Link>
+                            </li>
+                            <li className="navbar-item">
+                                <Link to="/employee" className="navbar-link">Employee</Link>
+                            </li>
                         </ul>
                     </nav>
                 </header>
@@ -28,6 +36,8 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/menu" element={<Menu />} />
+                        <Route path="/tables" element={<Table />} />
+                        <Route path="/employee" element={<EmployeeTable />} />
                     </Routes>
                 </main>
             </div>

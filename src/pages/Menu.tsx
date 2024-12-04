@@ -44,7 +44,7 @@ const Menu = () => {
 
       const createdDish = await createMenu(formData);
       setMenu([createdDish, ...menu]);
-      setNewImageFile(null); // Reset after creation
+      setNewImageFile(null);
     } catch (error) {
       console.error("Failed to add new dish:", error);
     }
@@ -90,7 +90,7 @@ const Menu = () => {
         console.log(`Menu with id ${id} successfully updated.`);
       } catch (error) {
         console.error("Failed to update dish on server:", error);
-        setMenu(menu); // Revert to previous state if update fails
+        setMenu(menu);
       }
     }
 

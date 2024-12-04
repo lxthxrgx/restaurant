@@ -1,6 +1,7 @@
-export interface employee
+export interface ITable
 {
     id:number;
-    TableNumber:number;
-    CountChairs:number;
+    tableNumber:number;
+    countChairs:number;
+    status:string;
 }
