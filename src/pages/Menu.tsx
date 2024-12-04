@@ -46,15 +46,16 @@ function Menu() {
     setEditMenu({ id, field });
   };
 
-  const handleInputChange = (id: number, field: string, value: string) => {
+  const handleInputChange = (id: number, field: string, value: string | number) => {
     setInputValues((prev) => ({
       ...prev,
       [id]: {
         ...prev[id],
-        [field]: value,
+        [field]: typeof value === "number" ? value.toString() : value,
       },
     }));
   };
+  
 
   const handleSave = (id: number, field: keyof IMenu) => {
     const updatedValue = inputValues[id]?.[field]?.trim() || menu.find((item) => item.id === id)?.[field] || "";
@@ -130,6 +131,19 @@ function Menu() {
   />
 ) : (
   <p onClick={() => handleEdit(item.id, "description")}>{item.description || "No description available."}</p>
+)}
+{editMenu?.id === item.id && editMenu.field === "price" ? (
+  <input
+    type="number"
+    value={inputValues[item.id]?.price ?? item.price}
+    onChange={(e) => handleInputChange(item.id, "price", e.target.value)}
+    onBlur={() => handleSave(item.id, "price")}
+    autoFocus
+  />
+) : (
+  <p onClick={() => handleEdit(item.id, "price")}>
+    {item.price ? `$${item.price}` : "Set a price"}
+  </p>
 )}
 
         </div>
