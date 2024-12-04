@@ -18,7 +18,7 @@ const initialTaskList: IMenu[] = [
     image: "/загружено.jfif",
   },
   {
-    id: 2,
+    id: 3,
     dishName: "Dish 3",
     description: "Description of Dish 3",
     price: 200,
@@ -37,7 +37,7 @@ function Menu() {
       dishName: `New Dish ${menu.length + 1}`,
       description: "This is a new description.",
       price: 0,
-      image: "https://via.placeholder.com/100", // Заглушка
+      image: "https://via.placeholder.com/100",
     };
     setMenu([newDish, ...menu]);
   };
@@ -56,16 +56,23 @@ function Menu() {
     }));
   };
 
-  const handleSave = (id: number, field: string) => {
-    const updatedValue = inputValues[id]?.[field] || "";
-    setMenu(menu.map((item) => (item.id === id ? { ...item, [field]: updatedValue } : item)));
+  const handleSave = (id: number, field: keyof IMenu) => {
+    const updatedValue = inputValues[id]?.[field]?.trim() || menu.find((item) => item.id === id)?.[field] || "";
+    setMenu(menu.map((item) =>
+      item.id === id ? { ...item, [field]: updatedValue } : item
+    ));
     setEditMenu(null);
     setInputValues((prev) => {
       const updated = { ...prev };
-      delete updated[id]?.[field];
+      if (updated[id]) {
+        delete updated[id][field];
+        if (Object.keys(updated[id]).length === 0) delete updated[id];
+      }
       return updated;
     });
   };
+  
+  
 
   const handleImageChange = (id: number, file: File) => {
     const reader = new FileReader();
@@ -103,27 +110,28 @@ function Menu() {
           </div>
         
           {editMenu?.id === item.id && editMenu.field === "dishName" ? (
-            <input
-              type="text"
-              value={inputValues[item.id]?.dishName || item.dishName}
-              onChange={(e) => handleInputChange(item.id, "dishName", e.target.value)}
-              onBlur={() => handleSave(item.id, "dishName")}
-              autoFocus
-            />
-          ) : (
-            <h3 onClick={() => handleEdit(item.id, "dishName")}>{item.dishName}</h3>
-          )}
-        
-          {editMenu?.id === item.id && editMenu.field === "description" ? (
-            <textarea
-              value={inputValues[item.id]?.description || item.description}
-              onChange={(e) => handleInputChange(item.id, "description", e.target.value)}
-              onBlur={() => handleSave(item.id, "description")}
-              autoFocus
-            />
-          ) : (
-            <p onClick={() => handleEdit(item.id, "description")}>{item.description}</p>
-          )}
+  <input
+    type="text"
+    value={inputValues[item.id]?.dishName ?? item.dishName}
+    onChange={(e) => handleInputChange(item.id, "dishName", e.target.value)}
+    onBlur={() => handleSave(item.id, "dishName")}
+    autoFocus
+  />
+) : (
+  <h3 onClick={() => handleEdit(item.id, "dishName")}>{item.dishName || "Unnamed Dish"}</h3>
+)}
+
+{editMenu?.id === item.id && editMenu.field === "description" ? (
+  <textarea
+    value={inputValues[item.id]?.description ?? item.description}
+    onChange={(e) => handleInputChange(item.id, "description", e.target.value)}
+    onBlur={() => handleSave(item.id, "description")}
+    autoFocus
+  />
+) : (
+  <p onClick={() => handleEdit(item.id, "description")}>{item.description || "No description available."}</p>
+)}
+
         </div>
         
         ))}
