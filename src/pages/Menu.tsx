@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../css/menu.css";
 import { IMenu } from "../model/menu";
-import { getMenu, createMenu, deleteMenu,updateMenu } from "../service/MenuR";
+import { getMenu, createMenu, deleteMenu, updateMenu } from "../service/MenuR";
 
 const Menu = () => {
   const [menu, setMenu] = useState<IMenu[]>([]);
   const [editMenu, setEditMenu] = useState<{ id: number; field: string } | null>(null);
   const [inputValues, setInputValues] = useState<{ [key: number]: { [field: string]: string } }>({});
+  const [newImageFile, setNewImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -21,10 +22,10 @@ const Menu = () => {
         console.error("Failed to fetch menu data:", error);
       }
     };
-  
+
     fetchMenu();
   }, []);
-  
+
   const handleAddNew = async () => {
     const newDish: IMenu = {
       id: menu.length + 1,
@@ -35,10 +36,23 @@ const Menu = () => {
     };
 
     try {
-      const createdDish = await createMenu(newDish);
+      const formData = new FormData();
+      formData.append("menu", JSON.stringify(newDish));
+      if (newImageFile) {
+        formData.append("imageFile", newImageFile);
+      }
+
+      const createdDish = await createMenu(formData);
       setMenu([createdDish, ...menu]);
+      setNewImageFile(null); // Reset after creation
     } catch (error) {
       console.error("Failed to add new dish:", error);
+    }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setNewImageFile(event.target.files[0]);
     }
   };
 
@@ -61,24 +75,25 @@ const Menu = () => {
       inputValues[id]?.[field]?.trim() ||
       menu.find((item) => item.id === id)?.[field] ||
       "";
-  
+
     const updatedMenu = menu.map((item) =>
       item.id === id ? { ...item, [field]: updatedValue } : item
     );
-  
+
     setMenu(updatedMenu);
-  
+
     const menuToUpdate = updatedMenu.find((item) => item.id === id);
-  
+
     if (menuToUpdate) {
       try {
         await updateMenu(id, menuToUpdate);
         console.log(`Menu with id ${id} successfully updated.`);
       } catch (error) {
         console.error("Failed to update dish on server:", error);
-        setMenu(menu);
+        setMenu(menu); // Revert to previous state if update fails
       }
     }
+
     setEditMenu(null);
     setInputValues((prev) => {
       const updated = { ...prev };
@@ -89,17 +104,17 @@ const Menu = () => {
       return updated;
     });
   };
-  
+
   const handleDelete = async (id: number) => {
     try {
-      await deleteMenu(id); 
+      await deleteMenu(id);
       setMenu(menu.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Failed to delete dish:", error);
     }
   };
 
-  const handleImageChange = (id: number, file: File) => {
+  const handleImagePreview = (id: number, file: File) => {
     const reader = new FileReader();
     reader.onload = () => {
       setMenu(
@@ -123,28 +138,32 @@ const Menu = () => {
           <p>Add New Dish</p>
         </div>
 
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ margin: "10px" }}
+        />
+
         {menu.map((item) => (
           <div key={item.id} className="tile">
             <div className="image-container">
               <img src={item.image} alt={item.dishName} className="dish-image" />
-              {!item.image && (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) =>
-                    e.target.files && handleImageChange(item.id, e.target.files[0])
-                  }
-                />
-              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  e.target.files && handleImagePreview(item.id, e.target.files[0])
+                }
+                style={{ display: "none" }}
+              />
             </div>
 
             {editMenu?.id === item.id && editMenu.field === "dishName" ? (
               <input
                 type="text"
                 value={inputValues[item.id]?.dishName ?? item.dishName}
-                onChange={(e) =>
-                  handleInputChange(item.id, "dishName", e.target.value)
-                }
+                onChange={(e) => handleInputChange(item.id, "dishName", e.target.value)}
                 onBlur={() => handleSave(item.id, "dishName")}
                 autoFocus
               />
@@ -157,9 +176,7 @@ const Menu = () => {
             {editMenu?.id === item.id && editMenu.field === "description" ? (
               <textarea
                 value={inputValues[item.id]?.description ?? item.description}
-                onChange={(e) =>
-                  handleInputChange(item.id, "description", e.target.value)
-                }
+                onChange={(e) => handleInputChange(item.id, "description", e.target.value)}
                 onBlur={() => handleSave(item.id, "description")}
                 autoFocus
               />
@@ -173,9 +190,7 @@ const Menu = () => {
               <input
                 type="number"
                 value={inputValues[item.id]?.price ?? item.price}
-                onChange={(e) =>
-                  handleInputChange(item.id, "price", e.target.value)
-                }
+                onChange={(e) => handleInputChange(item.id, "price", e.target.value)}
                 onBlur={() => handleSave(item.id, "price")}
                 autoFocus
               />
