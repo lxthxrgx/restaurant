@@ -11,14 +11,9 @@ export const getMenu = async (): Promise<ApiResponse> => {
 };
 
 export const createMenu = async (formData: FormData): Promise<IMenu> => {
-  const response = await apiClient.post<IMenu>("/api/Menu/Add", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const response = await apiClient.post<IMenu>("/api/Menu/Add", formData);
   return response.data;
 };
-
 
 export const updateMenu = async (id: number, menu: Partial<IMenu>): Promise<IMenu> => {
   const response = await apiClient.put<IMenu>(`/api/Menu/${id}`, menu);

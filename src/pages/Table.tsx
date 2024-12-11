@@ -145,7 +145,7 @@ const Table = () => {
                 />
               ) : (
                 <span onClick={() => handleEdit(item.id, "countChairs")}>
-                  Table #{item.countChairs}
+                  Count Chairs: {item.countChairs}
                 </span>
               )}
             </p>

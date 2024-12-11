@@ -138,26 +138,8 @@ const Menu = () => {
           <p>Add New Dish</p>
         </div>
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          style={{ margin: "10px" }}
-        />
-
         {menu.map((item) => (
           <div key={item.id} className="tile">
-            <div className="image-container">
-              <img src={item.image} alt={item.dishName} className="dish-image" />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  e.target.files && handleImagePreview(item.id, e.target.files[0])
-                }
-                style={{ display: "none" }}
-              />
-            </div>
 
             {editMenu?.id === item.id && editMenu.field === "dishName" ? (
               <input
