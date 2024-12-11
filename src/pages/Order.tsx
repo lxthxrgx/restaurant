@@ -25,7 +25,7 @@ const AddOrderForm: React.FC = () => {
     });
 
     const [orderDetails, setOrderDetails] = useState<IOrderdetails[]>([
-        { id: 0, orderId: 0, menuId: 0, amount: 1, price: 0, menu: { id: 0, dishName: "", description: "", price: 0, image: "" } }
+        { id: 0, orderId: 0, menuId: 0, amount: 1, price: 0, menu: { id: 0, dishName: "", description: "", price: 0} }
     ]);
 
     const [customers, setCustomers] = useState<ICustomer[]>([]);
@@ -112,8 +112,7 @@ const AddOrderForm: React.FC = () => {
                 id: menuItem.id,
                 dishName: menuItem.dishName,
                 description: menuItem.description || "",
-                price: menuItem.price,
-                image: menuItem.image || ""
+                price: menuItem.price
             };
         }
     
@@ -124,7 +123,7 @@ const AddOrderForm: React.FC = () => {
     const addOrderDetail = () => {
         setOrderDetails([
             ...orderDetails,
-            { id: 0, orderId: 0, menuId: 0, amount: 1, price: 0, menu: { id: 0, dishName: "", description: "", price: 0, image: "" } }
+            { id: 0, orderId: 0, menuId: 0, amount: 1, price: 0, menu: { id: 0, dishName: "", description: "", price: 0} }
         ]);
     };
     

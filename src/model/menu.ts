@@ -4,5 +4,4 @@ export interface IMenu
     dishName:string;
     description:string;
     price:number;
-    image:string;
 }

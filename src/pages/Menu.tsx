@@ -26,29 +26,21 @@ const Menu = () => {
     fetchMenu();
   }, []);
 
-  const handleAddNew = async () => {
-    const newDish: IMenu = {
-      id: menu.length + 1,
-      dishName: `New Dish ${menu.length + 1}`,
-      description: "This is a new description.",
-      price: 0,
-      image: "https://via.placeholder.com/100",
-    };
-
-    try {
-      const formData = new FormData();
-      formData.append("menu", JSON.stringify(newDish));
-      if (newImageFile) {
-        formData.append("imageFile", newImageFile);
+    const handleAddNew = async () => {
+      const newMenu: IMenu = {
+        id: 0,
+        dishName: "New Dish",
+        description: "New description",
+        price: 1,
+      };
+    
+      try {
+        const createdTable = await createMenu(newMenu);
+        setMenu((prevMenu) => [createdTable, ...prevMenu]);
+      } catch (error) {
+        console.error("Failed to add new table:", error);
       }
-
-      const createdDish = await createMenu(formData);
-      setMenu([createdDish, ...menu]);
-      setNewImageFile(null);
-    } catch (error) {
-      console.error("Failed to add new dish:", error);
-    }
-  };
+    };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
