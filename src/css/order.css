@@ -1,0 +1,88 @@
+/* Общие стили формы */
+form {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок */
+.MuiTypography-h4 {
+    color: #3f51b5;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Поля формы */
+.MuiTextField-root {
+    margin: 10px 0;
+}
+
+/* Кнопка добавления блюда */
+.MuiButton-containedPrimary {
+    background-color: #3f51b5;
+    color: white;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.MuiButton-containedPrimary:hover {
+    background-color: #283593;
+}
+
+/* Кнопка удаления */
+.MuiIconButton-colorSecondary {
+    color: #f44336;
+}
+
+.MuiIconButton-colorSecondary:hover {
+    background-color: rgba(244, 67, 54, 0.08);
+}
+
+/* Кнопка отправки формы */
+.MuiButton-fullWidth {
+    background-color: #4caf50;
+    color: white;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.MuiButton-fullWidth:hover {
+    background-color: #388e3c;
+}
+
+/* Блюдо и его количество */
+.MuiGrid-container {
+    margin-bottom: 15px;
+}
+
+.MuiTextField-label {
+    font-weight: bold;
+    color: #3f51b5;
+}
+
+.MuiTextField-input {
+    padding: 10px;
+}
+
+/* Стили для выпадающих списков */
+.MuiMenuItem-root {
+    padding: 10px 15px;
+    transition: background-color 0.2s ease;
+}
+
+.MuiMenuItem-root:hover {
+    background-color: #e8eaf6;
+}
+
+/* Стили для ошибки */
+.Mui-error {
+    color: #f44336 !important;
+}
+
+/* Общие стили для грида */
+.MuiGrid-item {
+    padding: 10px;
+}

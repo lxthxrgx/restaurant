@@ -1,7 +1,7 @@
-export interface customer
+export interface ICustomer
 {
     id:number;
-    Name:string;
-    Surname:string;
-    Phone:string;
+    name:string;
+    surname:string;
+    phone:string;
 }

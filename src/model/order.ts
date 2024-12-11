@@ -1,4 +1,4 @@
-export interface order
+export interface IOrder
 {
     id:number;
     orderDateTime:Date;

@@ -5,6 +5,7 @@ import './App.css';
 import Menu from './pages/Menu';
 import Table from './pages/Table';
 import EmployeeTable from './pages/Employee';
+import AddOrder from './pages/Order';
 
 function Home() {
     return <h1>Welcome to the Home Page</h1>;
@@ -29,6 +30,9 @@ function App() {
                             <li className="navbar-item">
                                 <Link to="/employee" className="navbar-link">Employee</Link>
                             </li>
+                            <li className="navbar-item">
+                                <Link to="/order" className="navbar-link">Order</Link>
+                            </li>
                         </ul>
                     </nav>
                 </header>
@@ -38,6 +42,7 @@ function App() {
                         <Route path="/menu" element={<Menu />} />
                         <Route path="/tables" element={<Table />} />
                         <Route path="/employee" element={<EmployeeTable />} />
+                        <Route path="/order" element={<AddOrder />} />
                     </Routes>
                 </main>
             </div>
